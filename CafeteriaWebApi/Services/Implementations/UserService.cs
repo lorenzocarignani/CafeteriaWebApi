@@ -23,8 +23,8 @@ namespace CafeteriaWebApi.Services.Implementations
         {
             User userToDelete = _context.Users.SingleOrDefault(u => u.Id == userId);
             userToDelete.State = false;
+            _context.Update(userToDelete);
             _context.SaveChanges();
-
         }
 
         public User GetByEmail(string email)
@@ -32,7 +32,7 @@ namespace CafeteriaWebApi.Services.Implementations
             return _context.Users.SingleOrDefault(u => u.Email == email);
         }
 
-        public int UpdateAdmin(User user)
+        public int UpdateUser(User user)
         {
 
             var existingUser = _context.Users.SingleOrDefault(u => u.Id == user.Id);
@@ -43,17 +43,16 @@ namespace CafeteriaWebApi.Services.Implementations
                 return 0 ;
             }
 
-
             existingUser.Email = user.Email;
             existingUser.Name = user.Name;
             existingUser.Password = user.Password;
-
-
 
             _context.Update(existingUser);
             _context.SaveChanges();
 
             return existingUser.Id;
         }
+
+
     }
 }
