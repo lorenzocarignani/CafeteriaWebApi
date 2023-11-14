@@ -17,5 +17,6 @@ namespace CafeteriaWebApi.Services.Implementations
         {
             return _context.Users.Where(u => u.UserType == "Client").ToList();
         }
+
     }
 }
