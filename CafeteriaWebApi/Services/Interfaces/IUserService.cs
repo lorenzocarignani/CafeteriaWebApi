@@ -6,7 +6,7 @@ namespace CafeteriaWebApi.Services.Interfaces
     {
         public int CreateUser(User user);
 
-        public void UpdateUser(User user); 
+        public int UpdateAdmin(User user); 
 
         public void DeleteUser(int userId);
 

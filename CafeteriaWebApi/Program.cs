@@ -1,4 +1,6 @@
 using CafeteriaWebApi.Data;
+using CafeteriaWebApi.Services.Implementations;
+using CafeteriaWebApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CafeteriaContext>(dbContextOptions => dbContextOptions.UseSqlite(
     builder.Configuration["DB:ConnectionString"]));
 
+#region
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IUserService, UserService>();
+#endregion
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

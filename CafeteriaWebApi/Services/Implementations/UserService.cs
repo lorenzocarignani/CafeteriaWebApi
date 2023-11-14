@@ -32,10 +32,28 @@ namespace CafeteriaWebApi.Services.Implementations
             return _context.Users.SingleOrDefault(u => u.Email == email);
         }
 
-        public void UpdateUser(User user)
+        public int UpdateAdmin(User user)
         {
-            _context.Update(user);
+
+            var existingUser = _context.Users.SingleOrDefault(u => u.Id == user.Id);
+
+            if (existingUser == null)
+            {
+                
+                return 0 ;
+            }
+
+
+            existingUser.Email = user.Email;
+            existingUser.Name = user.Name;
+            existingUser.Password = user.Password;
+
+
+
+            _context.Update(existingUser);
             _context.SaveChanges();
+
+            return existingUser.Id;
         }
     }
 }
