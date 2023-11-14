@@ -76,7 +76,7 @@ namespace CafeteriaWebApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("CreateAdmin")]
         public IActionResult CreateAdmin([FromBody] AdminPostDto adminDto)
         {
             try
@@ -86,7 +86,6 @@ namespace CafeteriaWebApi.Controllers
                     Email = adminDto.Email,
                     Name = adminDto.Name,
                     Password = adminDto.Password,
-                    UserType = "Admin"
                 };
                 if (res == null)
                 {
@@ -103,24 +102,51 @@ namespace CafeteriaWebApi.Controllers
 
         }
 
-        [HttpPut("{userId}")]
-        public IActionResult UpdateAdmin([FromRoute] int userId, [FromBody] UserPutDto userDto)
+
+        [HttpPost("CreateClient")]
+        public IActionResult CreateClient([FromBody] AdminPostDto adminDto)
+        {
+            try
+            {
+                var res = new Client()
+                {
+                    Email = adminDto.Email,
+                    Name = adminDto.Name,
+                    Password = adminDto.Password,
+                };
+                if (res == null)
+                {
+                    return BadRequest(res);
+                }
+                int id = _userService.CreateUser(res);
+                return Ok(id);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno del servidor" + ex.Message);
+            }
+
+        }
+
+        [HttpPut("UpdateAdmin/{AdminId}")]
+        public IActionResult UpdateAdmin([FromRoute] int AdminId, [FromBody] UserPutDto userDto)
         {
             try
             {
                 var userToUpdate = new Admin()
                 {
-                    Id = userId,
+                    Id = AdminId,
                     Email = userDto.Email,
                     Name = userDto.Name,
                     Password = userDto.Password,
                 };
 
-                int updatedUserId = _userService.UpdateAdmin(userToUpdate);
+                int updatedUserId = _userService.UpdateUser(userToUpdate);
 
                 if (updatedUserId == 0)
                 {
-                    return NotFound($"Usuario con ID {userId} no encontrado");
+                    return NotFound($"Usuario con ID {AdminId} no encontrado");
                 }
 
                 return Ok(updatedUserId);
@@ -131,6 +157,52 @@ namespace CafeteriaWebApi.Controllers
             }
         }
 
+        [HttpPut("UpdateClient/{ClientId}")]
+        public IActionResult UpdateClient([FromRoute] int ClientId, [FromBody] UserPutDto userDto)
+        {
+            try
+            {
+                var clientToUpdate = new Client()
+                {
+                    Id = ClientId,
+                    Email = userDto.Email,
+                    Name = userDto.Name,
+                    Password = userDto.Password,
+                };
+
+                int updatedClientId = _userService.UpdateUser(clientToUpdate);
+
+                if (updatedClientId == 0)
+                {
+                    return NotFound($"Usuario con ID {ClientId} no encontrado");
+                }
+
+                return Ok(updatedClientId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno del servidor: " + ex.Message);
+            }
+        }
+
+
+        [HttpDelete("DeleteUser/{userId}")]
+        public IActionResult DeleteUser(int userId)
+        {
+            try
+            {
+                if (userId == 0)
+                {
+                    return NotFound();
+                }
+                _userService.DeleteUser(userId);
+                return NoContent();
+
+            }catch (Exception ex)
+            {
+                return StatusCode(500,"Error interno del servidor" +  ex.Message);
+            }
+        }
 
     }
 }

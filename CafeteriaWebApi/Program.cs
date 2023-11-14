@@ -19,6 +19,7 @@ builder.Services.AddDbContext<CafeteriaContext>(dbContextOptions => dbContextOpt
 #region
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 #endregion
 var app = builder.Build();
 
