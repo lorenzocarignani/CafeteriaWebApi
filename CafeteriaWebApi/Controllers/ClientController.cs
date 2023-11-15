@@ -18,39 +18,40 @@ namespace CafeteriaWebApi.Controllers
     {
         private readonly IUserService _userService;
         private readonly IOrderService _orderService;
+        private readonly IClientService _clientService;
 
-        public ClientController(IUserService userService, IOrderService orderService)
+        public ClientController(IUserService userService, IOrderService orderService, IClientService clientService)
         {
             _userService = userService;
             _orderService = orderService;
+            _clientService = clientService;
         }
 
-        //[HttpGet("{id}")]
-        //public IActionResult GetOrder()
-        //{
-
-        //}
-
-        [HttpGet("{email}/orders/{orderId}")]
-        public IActionResult GetOrderById(string email, int orderId)
+        [HttpGet("{id}/{orderId}")]
+        public IActionResult GetOrderById(int id, int orderId)
         {
-            // Obtén el usuario por su dirección de correo electrónico
-            var user = _userService.GetByEmail(email);
-            if (user == null)
+            try
             {
-                return NotFound("Usuario no encontrado");
+                var client = _clientService.GetClientById(id);
+                if (client == null)
+                {
+                    return NotFound("Cliente no encontrado");
+                }
+                // si la order coinicide con el id del cliente la trae si no no
+                    
+                var order = _orderService.GetOrder(id, orderId); 
+
+                if (order == null)
+                {
+                    return NotFound("Orden no encontrada");
+                }
+
+                return Ok(order);
             }
-
-            // Luego, obtén la orden por su ID
-            var order = _orderService.GetOrder(orderId);
-
-            // Verifica si la orden existe
-            if (order == null)
+            catch (Exception ex)
             {
-                return NotFound("Orden no encontrada");
+                return StatusCode(500, "Error interno del servidor" + ex.Message);
             }
-
-            return Ok(order);
         }
 
 
