@@ -10,6 +10,6 @@ namespace CafeteriaWebApi.Services.Interfaces
 
         public void DeleteOrder(int orderId);
 
-        public Order? GetOrder(int orderId);
+        public Order? GetOrder(int Id, int orderId);
     }
 }

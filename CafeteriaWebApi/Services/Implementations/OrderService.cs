@@ -30,12 +30,15 @@ namespace CafeteriaWebApi.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public Order? GetOrder(int orderId)
+        public Order? GetOrder(int Id, int orderId)
         {
+            //return _context.Orders
+            //    .Include(c => c.Clients)
+            //    .FirstOrDefault(o => o.IdOrder == orderId);
             return _context.Orders
-                
-                .SingleOrDefault(o => o.IdOrder == orderId);
-        }
+                       .Include(o => o.Clients)
+                       .FirstOrDefault(o => o.Clients.Id == Id && o.IdOrder == orderId);
+        }   
 
     }
 }

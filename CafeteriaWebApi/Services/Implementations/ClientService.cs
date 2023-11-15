@@ -13,10 +13,18 @@ namespace CafeteriaWebApi.Services.Implementations
             _context = context;
 
         }
+
+        public User GetClientById(int id)
+        {
+            return _context.Users.FirstOrDefault(u => u.Id == id);
+        }
+
         public List<User> GetClient()
         {
             return _context.Users.Where(u => u.UserType == "Client").ToList();
         }
 
+
+      
     }
 }
