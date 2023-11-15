@@ -15,11 +15,6 @@ namespace CafeteriaWebApi.Services.Implementations
             _context = context;
         }
 
-        public int CreateOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteOrder(int orderId)
         {
             throw new NotImplementedException();
@@ -38,7 +33,21 @@ namespace CafeteriaWebApi.Services.Implementations
             return _context.Orders
                        .Include(o => o.Clients)
                        .FirstOrDefault(o => o.Clients.Id == Id && o.IdOrder == orderId);
-        }   
+        }
 
+        public List<Order> GetAllOrders(int Id)
+        {
+            return _context.Orders
+                       .Include(o => o.Clients)
+                       .Where(o => o.Clients.Id == Id)
+                       .ToList();
+        }
+
+        public int CreateOrder(Order order)
+        {
+            _context.Add(order);
+            _context.SaveChanges();
+            return order.IdOrder;
+        }
     }
 }
