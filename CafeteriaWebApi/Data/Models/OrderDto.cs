@@ -8,8 +8,7 @@ namespace CafeteriaWebApi.Data.Models
 	{
         [Required]
         public ICollection<Product> NameOrder { get; set; }
-       // [Required]
-        //public decimal Quantity { get; set; }
+        public int Quantity { get; set; }
     }
 }
 

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CafeteriaWebApi.Migrations
 {
     [DbContext(typeof(CafeteriaContext))]
-    [Migration("20231115033318_addOrderQuantityNameOrder")]
-    partial class addOrderQuantityNameOrder
+    [Migration("20231116215731_FixQuantity")]
+    partial class FixQuantity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,9 @@ namespace CafeteriaWebApi.Migrations
                     b.Property<DateTime>("DeliveryTime")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("State")
                         .HasColumnType("INTEGER");
 
@@ -54,7 +57,8 @@ namespace CafeteriaWebApi.Migrations
                         {
                             IdOrder = 1,
                             ClientId = 2,
-                            DeliveryTime = new DateTime(2023, 11, 15, 0, 33, 18, 309, DateTimeKind.Local).AddTicks(8710),
+                            DeliveryTime = new DateTime(2023, 11, 16, 18, 57, 31, 856, DateTimeKind.Local).AddTicks(829),
+                            Quantity = 0,
                             State = 1,
                             TotalPrice = 1050m
                         });

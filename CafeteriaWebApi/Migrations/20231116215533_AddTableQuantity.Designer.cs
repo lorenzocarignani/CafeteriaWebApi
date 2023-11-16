@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CafeteriaWebApi.Migrations
 {
     [DbContext(typeof(CafeteriaContext))]
-    [Migration("20231112235533_FirstMigrationSalesOrderLineOrdersClient")]
-    partial class FirstMigrationSalesOrderLineOrdersClient
+    [Migration("20231116215533_AddTableQuantity")]
+    partial class AddTableQuantity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,9 @@ namespace CafeteriaWebApi.Migrations
                     b.Property<DateTime>("DeliveryTime")
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("State")
                         .HasColumnType("INTEGER");
 
@@ -48,6 +51,17 @@ namespace CafeteriaWebApi.Migrations
                     b.HasIndex("ClientId");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            IdOrder = 1,
+                            ClientId = 2,
+                            DeliveryTime = new DateTime(2023, 11, 16, 18, 55, 33, 844, DateTimeKind.Local).AddTicks(3814),
+                            Quantity = 0m,
+                            State = 1,
+                            TotalPrice = 1050m
+                        });
                 });
 
             modelBuilder.Entity("CafeteriaWebApi.Data.Entities.Product", b =>
@@ -60,8 +74,10 @@ namespace CafeteriaWebApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("NameProduct")
-                        .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("OrderIdOrder")
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
@@ -70,7 +86,17 @@ namespace CafeteriaWebApi.Migrations
 
                     b.HasIndex("AdminId");
 
+                    b.HasIndex("OrderIdOrder");
+
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            IdProduct = 1,
+                            NameProduct = "Cafe",
+                            Price = 1m
+                        });
                 });
 
             modelBuilder.Entity("CafeteriaWebApi.Data.Entities.SaleOrderLine", b =>
@@ -111,11 +137,9 @@ namespace CafeteriaWebApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("State")
@@ -188,6 +212,10 @@ namespace CafeteriaWebApi.Migrations
                     b.HasOne("CafeteriaWebApi.Data.Entities.Admin", null)
                         .WithMany("Products")
                         .HasForeignKey("AdminId");
+
+                    b.HasOne("CafeteriaWebApi.Data.Entities.Order", null)
+                        .WithMany("NameOrder")
+                        .HasForeignKey("OrderIdOrder");
                 });
 
             modelBuilder.Entity("CafeteriaWebApi.Data.Entities.SaleOrderLine", b =>
@@ -211,6 +239,8 @@ namespace CafeteriaWebApi.Migrations
 
             modelBuilder.Entity("CafeteriaWebApi.Data.Entities.Order", b =>
                 {
+                    b.Navigation("NameOrder");
+
                     b.Navigation("SaleOrderLines");
                 });
 

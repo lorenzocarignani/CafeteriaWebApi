@@ -1,11 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
 namespace CafeteriaWebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigrationSalesOrderLineOrdersClient : Migration
+    public partial class AddTableQuantity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +19,8 @@ namespace CafeteriaWebApi.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Password = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     UserType = table.Column<string>(type: "TEXT", nullable: false),
                     State = table.Column<bool>(type: "INTEGER", nullable: false)
@@ -36,6 +39,7 @@ namespace CafeteriaWebApi.Migrations
                     State = table.Column<int>(type: "INTEGER", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "TEXT", nullable: false),
                     DeliveryTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Quantity = table.Column<decimal>(type: "TEXT", nullable: false),
                     ClientId = table.Column<int>(type: "INTEGER", nullable: false),
                     AdminId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
@@ -61,13 +65,19 @@ namespace CafeteriaWebApi.Migrations
                 {
                     IdProduct = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    NameProduct = table.Column<string>(type: "TEXT", nullable: false),
+                    NameProduct = table.Column<string>(type: "TEXT", nullable: true),
                     Price = table.Column<decimal>(type: "TEXT", nullable: false),
-                    AdminId = table.Column<int>(type: "INTEGER", nullable: true)
+                    AdminId = table.Column<int>(type: "INTEGER", nullable: true),
+                    OrderIdOrder = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.IdProduct);
+                    table.ForeignKey(
+                        name: "FK_Products_Orders_OrderIdOrder",
+                        column: x => x.OrderIdOrder,
+                        principalTable: "Orders",
+                        principalColumn: "IdOrder");
                     table.ForeignKey(
                         name: "FK_Products_Users_AdminId",
                         column: x => x.AdminId,
@@ -104,6 +114,11 @@ namespace CafeteriaWebApi.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "IdProduct", "AdminId", "NameProduct", "OrderIdOrder", "Price" },
+                values: new object[] { 1, null, "Cafe", null, 1m });
+
+            migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "Name", "Password", "State", "UserType" },
                 values: new object[,]
@@ -111,6 +126,11 @@ namespace CafeteriaWebApi.Migrations
                     { 1, "admin@gmail.com", "admin", "admin", true, "Admin" },
                     { 2, "client@gmail.com", "client", "client", true, "Client" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Orders",
+                columns: new[] { "IdOrder", "AdminId", "ClientId", "DeliveryTime", "Quantity", "State", "TotalPrice" },
+                values: new object[] { 1, null, 2, new DateTime(2023, 11, 16, 18, 55, 33, 844, DateTimeKind.Local).AddTicks(3814), 0m, 1, 1050m });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_AdminId",
@@ -126,6 +146,11 @@ namespace CafeteriaWebApi.Migrations
                 name: "IX_Products_AdminId",
                 table: "Products",
                 column: "AdminId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_OrderIdOrder",
+                table: "Products",
+                column: "OrderIdOrder");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SaleOrderLines_OrderId",
@@ -145,10 +170,10 @@ namespace CafeteriaWebApi.Migrations
                 name: "SaleOrderLines");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Users");
