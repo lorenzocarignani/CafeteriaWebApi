@@ -85,38 +85,36 @@ namespace CafeteriaWebApi.Controllers
             }
         }
 
-        
-        //[HttpPost("CreateOrder")]
-        //public IActionResult CreateOrder([FromBody] OrderDto orderDto)
-        //{
-            
-        //    try
-        //    {
-        //        List<Product> product = _productService.GetAllProducts();
 
-        //        var order = new Order
-        //        {
-        //            NameOrder = product,
-        //            Quantity = orderDto.Quantity 
-        //        };
+        [HttpPost("CreateOrder")]
+        public IActionResult CreateOrder([FromBody] OrderDto orderDto)
+        {
+
+            try
+            {
+                var order = new Order()
+                {
+                    NameOrder = orderDto.NameOrder,
+                    Quantity = orderDto.Quantity
+                };
 
 
-        //        if (order == null)
-        //        {
-        //            return NotFound("Ordenes no encontrada");
-        //        }
+                if (order == null)
+                {
+                    return NotFound("Ordenes no encontrada");
+                }
 
-        //        int id = _orderService.CreateOrder(order);
-        //        return Ok(id);
+                int id = _orderService.CreateOrder(order);
+                return Ok($"el id de su producto es {id}");
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, "Error interno del servidor" + ex.Message);
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno del servidor" + ex.Message);
+            }
+        }
 
-        
+
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {

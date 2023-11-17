@@ -18,5 +18,7 @@ namespace CafeteriaWebApi.Data.Entities
         [ForeignKey("OrderId")]
         public Order? Orders { get; set; }
         public int OrderId { get; set; }
+
+        public ICollection<Product> Product { get; set; } = new List<Product>();
     }
 }

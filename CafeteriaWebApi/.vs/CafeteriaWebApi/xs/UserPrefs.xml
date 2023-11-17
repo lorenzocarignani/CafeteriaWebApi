@@ -1,38 +1,49 @@
 ﻿<Properties StartupConfiguration="{3C8DBAB4-89B4-4C33-843F-8E6705FCCDAE}|Default">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/ClientController.cs">
+  <MonoDevelop.Ide.ItemProperties.CafeteriaWebApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Data/Entities/Admin.cs">
     <Files>
-      <File FileName="Enums/StateOrder.cs" Line="1" Column="1" />
-      <File FileName="Services/Implementations/UserService.cs" Line="31" Column="10" />
-      <File FileName="Services/Implementations/SalesOrderLineService.cs" Line="1" Column="1" />
-      <File FileName="Services/Implementations/ProductService.cs" Line="1" Column="1" />
-      <File FileName="Services/Implementations/OrderService.cs" Line="37" Column="54" />
-      <File FileName="Services/Implementations/ClientService.cs" Line="20" Column="1" />
-      <File FileName="Services/Implementations/AdminService.cs" Line="1" Column="1" />
-      <File FileName="Data/Entities/User.cs" Line="3" Column="1" />
-      <File FileName="Controllers/ClientController.cs" Line="39" Column="45" />
-      <File FileName="Services/Interfaces/IClientService.cs" Line="7" Column="36" />
-      <File FileName="Services/Interfaces/IAdminService.cs" Line="1" Column="1" />
-      <File FileName="Services/Interfaces/IUserService.cs" Line="12" Column="1" />
-      <File FileName="Services/Interfaces/IProductService.cs" Line="1" Column="1" />
-      <File FileName="Services/Interfaces/IOrderService.cs" Line="13" Column="23" />
-      <File FileName="Data/CafeteriaContext.cs" Line="39" Column="46" />
-      <File FileName="Data/Entities/Order.cs" Line="23" Column="1" />
-      <File FileName="Data/Entities/Client.cs" Line="1" Column="1" />
+      <File FileName="Enums/StateOrder.cs" />
+      <File FileName="Services/Implementations/UserService.cs" />
+      <File FileName="Services/Implementations/SalesOrderLineService.cs" />
+      <File FileName="Services/Implementations/ProductService.cs" />
+      <File FileName="Services/Implementations/OrderService.cs" />
+      <File FileName="Services/Implementations/ClientService.cs" />
+      <File FileName="Services/Implementations/AdminService.cs" />
+      <File FileName="Data/Entities/User.cs" Line="19" Column="1" />
+      <File FileName="Controllers/ClientController.cs" />
+      <File FileName="Services/Interfaces/IClientService.cs" />
+      <File FileName="Services/Interfaces/IAdminService.cs" />
+      <File FileName="Services/Interfaces/IUserService.cs" />
+      <File FileName="Services/Interfaces/IProductService.cs" />
+      <File FileName="Services/Interfaces/IOrderService.cs" />
+      <File FileName="Data/CafeteriaContext.cs" />
+      <File FileName="Data/Entities/Order.cs" Line="17" Column="1" />
+      <File FileName="Data/Entities/Client.cs" Line="8" Column="1" />
+      <File FileName="Data/Models/OrderDto.cs" />
+      <File FileName="Data/Entities/Product.cs" Line="14" Column="43" />
+      <File FileName="Data/Entities/SaleOrderLine.cs" Line="25" Column="1" />
+      <File FileName="Controllers/AdminController.cs" />
+      <File FileName="Data/Entities/Admin.cs" Line="9" Column="5" />
+      <File FileName="Data/Models/AdminPostDto.cs" />
+      <File FileName="Data/Models/ProductDto.cs" />
+      <File FileName="Controllers/ProductController.cs" />
+      <File FileName="Data/Models/UserPutDto.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="CafeteriaWebApi">
-            <Node name="CafeteriaWebApi">
-              <Node name="Controllers" expanded="True">
-                <Node name="ClientController.cs" selected="True" />
-              </Node>
+            <Node name="CafeteriaWebApi" expanded="True">
               <Node name="Data" expanded="True">
-                <Node name="Entities" expanded="True" />
+                <Node name="Entities" expanded="True">
+                  <Node name="Admin.cs" selected="True" />
+                </Node>
               </Node>
               <Node name="Enums" expanded="True" />
             </Node>
@@ -41,7 +52,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.CafeteriaWebApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MultiItemStartupConfigurations />
 </Properties>

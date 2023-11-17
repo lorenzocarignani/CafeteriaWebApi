@@ -46,7 +46,8 @@ namespace CafeteriaWebApi.Data
                     State = Enums.StateOrder.Waiting,
                     TotalPrice = 1050,
                     DeliveryTime = DateTime.Now,
-                    ClientId = 2
+                    ClientId = 2,
+                    NameOrder = "Cafe"
                 });
 
             modelBuilder.Entity<Product>().HasData(
