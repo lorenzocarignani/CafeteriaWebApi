@@ -6,7 +6,7 @@
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Data/Entities/Order.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Data/Entities/Admin.cs">
     <Files>
       <File FileName="Enums/StateOrder.cs" />
       <File FileName="Services/Implementations/UserService.cs" />
@@ -22,14 +22,14 @@
       <File FileName="Services/Interfaces/IUserService.cs" />
       <File FileName="Services/Interfaces/IProductService.cs" />
       <File FileName="Services/Interfaces/IOrderService.cs" />
-      <File FileName="Data/CafeteriaContext.cs" Line="49" Column="34" />
-      <File FileName="Data/Entities/Order.cs" Line="18" Column="1" />
+      <File FileName="Data/CafeteriaContext.cs" />
+      <File FileName="Data/Entities/Order.cs" Line="17" Column="1" />
       <File FileName="Data/Entities/Client.cs" Line="8" Column="1" />
-      <File FileName="Data/Models/OrderDto.cs" Line="10" Column="23" />
+      <File FileName="Data/Models/OrderDto.cs" />
       <File FileName="Data/Entities/Product.cs" Line="14" Column="43" />
       <File FileName="Data/Entities/SaleOrderLine.cs" Line="25" Column="1" />
       <File FileName="Controllers/AdminController.cs" />
-      <File FileName="Data/Entities/Admin.cs" Line="6" Column="1" />
+      <File FileName="Data/Entities/Admin.cs" Line="9" Column="5" />
       <File FileName="Data/Models/AdminPostDto.cs" />
       <File FileName="Data/Models/ProductDto.cs" />
       <File FileName="Controllers/ProductController.cs" />
@@ -39,10 +39,11 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="CafeteriaWebApi">
-            <Node name="CafeteriaWebApi">
+            <Node name="CafeteriaWebApi" expanded="True">
               <Node name="Data" expanded="True">
-                <Node name="Entities" expanded="True" />
-                <Node name="Models" expanded="True" />
+                <Node name="Entities" expanded="True">
+                  <Node name="Admin.cs" selected="True" />
+                </Node>
               </Node>
               <Node name="Enums" expanded="True" />
             </Node>
