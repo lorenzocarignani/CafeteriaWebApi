@@ -11,5 +11,6 @@ namespace CafeteriaWebApi.Data.Entities
         public string? NameProduct { get; set; }
         public decimal Price { get; set; }
 
+        public ICollection<SaleOrderLine>? SaleOrderLines { get; set; }
     }
 }
