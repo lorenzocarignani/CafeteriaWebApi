@@ -7,7 +7,7 @@ namespace CafeteriaWebApi.Data.Models
 	public class OrderDto
 	{
         [Required]
-        public ICollection<Product> NameOrder { get; set; }
+        public string NameOrder { get; set; }
         public int Quantity { get; set; }
     }
 }

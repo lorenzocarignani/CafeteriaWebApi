@@ -13,12 +13,14 @@ namespace CafeteriaWebApi.Data.Entities
         public decimal TotalPrice { get; set; }
         public DateTime DeliveryTime { get; set; }
         public int Quantity { get; set; }
+        public string NameOrder { get; set; }
+
 
         [ForeignKey("ClientId")]
         public Client? Clients { get; set; }
         public int ClientId { get; set; }
 
         public ICollection<SaleOrderLine>? SaleOrderLines { get; set; }
-        public ICollection<Product> NameOrder { get; set; }
+     
     }
 }
