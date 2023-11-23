@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using CafeteriaWebApi.Enums;
 
 namespace CafeteriaWebApi.Data.Entities
 {
@@ -13,6 +14,6 @@ namespace CafeteriaWebApi.Data.Entities
         [Required]
         public string? Email { get; set; }
         public string? UserType { get; set; }
-        public bool State { get; set; } = true;
+        public StateUser UserState { get; set; } = StateUser.Enabled;
     }
 }

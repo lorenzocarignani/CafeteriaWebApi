@@ -22,7 +22,7 @@ namespace CafeteriaWebApi.Services.Implementations
         public void DeleteUser(int userId)
         {
             User userToDelete = _context.Users.SingleOrDefault(u => u.Id == userId);
-            userToDelete.State = false;
+            userToDelete.UserState = Enums.StateUser.Disabled;
             _context.Update(userToDelete);
             _context.SaveChanges();
         }
