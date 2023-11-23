@@ -18,7 +18,14 @@ namespace CafeteriaWebApi.Services.Implementations
 
         public void DeleteOrder(int orderId)
         {
-            throw new NotImplementedException();
+            var orderToDelete = _context.Orders.Find(orderId);
+
+            if (orderToDelete != null)
+            {
+                _context.Orders.Remove(orderToDelete);
+                _context.SaveChanges();
+            }
+            
         }
 
         public int UpdateOrder(Order order)

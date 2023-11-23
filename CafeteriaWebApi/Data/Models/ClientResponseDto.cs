@@ -1,4 +1,6 @@
 ﻿using System;
+using CafeteriaWebApi.Enums;
+
 namespace CafeteriaWebApi.Data.Models
 {
 	public class ClientResponseDto
@@ -8,7 +10,7 @@ namespace CafeteriaWebApi.Data.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public string UserType { get; set; }
-        public bool State { get; set; }
+        public StateUser UserState { get; set; } = StateUser.Enabled;
         public List<OrderResponseDto> Orders { get; set; }
     }
 }

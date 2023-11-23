@@ -80,7 +80,7 @@ namespace CafeteriaWebApi.Controllers
                     Password = client.Password,
                     Email = client.Email,
                     UserType = client.UserType,
-                    State = client.State,
+                    UserState = client.UserState,
                     Orders = orders.Select(o => new OrderResponseDto
                     {
                         IdOrder = o.IdOrder,
@@ -161,33 +161,33 @@ namespace CafeteriaWebApi.Controllers
         }
 
 
-        //[HttpDelete("clients/{clientId}/orders/{orderId}")]
-        //public IActionResult DeleteOrder(int clientId, int orderId)
-        //{
-        //    try
-        //    {
-        //        var client = _clientService.GetClientById(clientId);
-        //        if (client == null)
-        //        {
-        //            return NotFound("Cliente no encontrado");
-        //        }
+        [HttpDelete("clients/{clientId}/orders/{orderId}")]
+        public IActionResult DeleteOrder(int clientId, int orderId)
+        {
+            try
+            {
+                var client = _clientService.GetClientById(clientId);
+                if (client == null)
+                {
+                    return NotFound("Cliente no encontrado");
+                }
 
-        //        var order = _orderService.GetOrder(clientId, orderId);
-        //        if (order == null)
-        //        {
-        //            return NotFound("Orden no encontrada");
-        //        }
+                var order = _orderService.GetOrder(clientId, orderId);
+                if (order == null)
+                {
+                    return NotFound("Orden no encontrada");
+                }
 
-        //        // Realiza la lógica para eliminar la orden
-        //        _orderService.DeleteOrder(orderId);
+                
+                _orderService.DeleteOrder(orderId);
 
-        //        return Ok("Orden eliminada exitosamente");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, "Error interno del servidor" + ex.Message);
-        //    }
-        //}
+                return Ok("Orden eliminada exitosamente");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno del servidor" + ex.Message);
+            }
+        }
 
     }
 }
