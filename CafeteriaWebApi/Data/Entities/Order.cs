@@ -17,7 +17,7 @@ namespace CafeteriaWebApi.Data.Entities
 
 
         [ForeignKey("ClientId")]
-        public Client? Clients { get; set; }
+        public Client Clients { get; set; }
         public int ClientId { get; set; }
 
         public ICollection<SaleOrderLine>? SaleOrderLines { get; set; }

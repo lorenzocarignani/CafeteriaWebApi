@@ -1,5 +1,6 @@
 ﻿using CafeteriaWebApi.Data;
 using CafeteriaWebApi.Data.Entities;
+using CafeteriaWebApi.Data.Models;
 using CafeteriaWebApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,9 +21,23 @@ namespace CafeteriaWebApi.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public void UpdateOrder(Order order)
+        public int UpdateOrder(Order order)
         {
-            throw new NotImplementedException();
+            var existingOrder = _context.Orders.SingleOrDefault(o => o.IdOrder == order.IdOrder);
+
+            if (existingOrder == null)
+            {
+                return 0;
+            }
+
+            existingOrder.NameOrder = order.NameOrder;
+            existingOrder.Quantity = order.Quantity;
+
+            _context.Update(existingOrder);
+            _context.SaveChanges();
+
+            return existingOrder.IdOrder;
+
         }
 
         public Order? GetOrder(int Id, int orderId)
@@ -35,17 +50,30 @@ namespace CafeteriaWebApi.Services.Implementations
                        .FirstOrDefault(o => o.Clients.Id == Id && o.IdOrder == orderId);
         }
 
-        public List<Order> GetAllOrders(int Id)
+        public List<OrderResponseDto> GetAllOrders(int clientId)
+            
         {
-            return _context.Orders
-                       .Include(o => o.Clients)
-                       .Where(o => o.Clients.Id == Id)
-                       .ToList();
+            var clientOrders = _context.Orders
+                                    .Where(o => o.Clients.Id == clientId)
+                                    .Select(o => new OrderResponseDto
+                                    {
+                                        IdOrder = o.IdOrder,
+                                        State = o.State,
+                                        TotalPrice = o.TotalPrice,
+                                        DeliveryTime = o.DeliveryTime,
+                                        Quantity = o.Quantity,
+                                        NameOrder = o.NameOrder,
+                                        ClientId = o.ClientId,
+                                  
+                                    })
+                                    .ToList();
+
+            return clientOrders;
         }
 
         public int CreateOrder(Order order)
         {
-            _context.Add(order);
+            _context.Orders.Add(order);
             _context.SaveChanges();
             return order.IdOrder;
         }
