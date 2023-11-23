@@ -39,7 +39,6 @@ namespace CafeteriaWebApi.Services.Implementations
 
             if (existingUser == null)
             {
-                
                 return 0 ;
             }
 

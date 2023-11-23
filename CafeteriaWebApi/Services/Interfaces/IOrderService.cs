@@ -1,4 +1,5 @@
 ﻿using CafeteriaWebApi.Data.Entities;
+using CafeteriaWebApi.Data.Models;
 
 namespace CafeteriaWebApi.Services.Interfaces
 {
@@ -6,12 +7,12 @@ namespace CafeteriaWebApi.Services.Interfaces
     {
         public int CreateOrder(Order order);
    
-        public void UpdateOrder(Order order);
+        public int UpdateOrder(Order order);
 
         public void DeleteOrder(int orderId);
 
         public Order? GetOrder(int Id, int orderId);
 
-        public List<Order> GetAllOrders(int id);
+        public List<OrderResponseDto> GetAllOrders(int clientId);
     }
 }
