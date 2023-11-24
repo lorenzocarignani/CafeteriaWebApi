@@ -1,6 +1,7 @@
 ﻿using CafeteriaWebApi.Data.Entities;
 using CafeteriaWebApi.Data.Models;
 using CafeteriaWebApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace CafeteriaWebApi.Controllers
 {
     [Route("api/admin")]
     [ApiController]
+    [Authorize]
     public class AdminController : ControllerBase
     {
         private readonly IAdminService _adminService;

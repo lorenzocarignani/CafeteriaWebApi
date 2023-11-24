@@ -6,14 +6,15 @@ using CafeteriaWebApi.Data.Entities;
 using CafeteriaWebApi.Data.Models;
 using CafeteriaWebApi.Services.Implementations;
 using CafeteriaWebApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-//PutActualizar
-//DeleteCliente
+
 
 namespace CafeteriaWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientController : ControllerBase
     {
         private readonly IUserService _userService;

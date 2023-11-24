@@ -2,6 +2,7 @@
 using CafeteriaWebApi.Data.Models;
 using CafeteriaWebApi.Services.Implementations;
 using CafeteriaWebApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace CafeteriaWebApi.Controllers
 {
     [Route("api/products")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;

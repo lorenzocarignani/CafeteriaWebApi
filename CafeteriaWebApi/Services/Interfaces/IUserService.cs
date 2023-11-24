@@ -1,4 +1,5 @@
 ﻿using CafeteriaWebApi.Data.Entities;
+using CafeteriaWebApi.Data.Models;
 
 namespace CafeteriaWebApi.Services.Interfaces
 {
@@ -12,5 +13,6 @@ namespace CafeteriaWebApi.Services.Interfaces
 
         public User GetByEmail(string email);
 
+        public BaseResponse ValidarUsuario(string username, string password);
     }
 }

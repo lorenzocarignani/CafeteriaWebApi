@@ -1,5 +1,6 @@
 ﻿using CafeteriaWebApi.Data;
 using CafeteriaWebApi.Data.Entities;
+using CafeteriaWebApi.Data.Models;
 using CafeteriaWebApi.Services.Interfaces;
 
 namespace CafeteriaWebApi.Services.Implementations
@@ -52,6 +53,30 @@ namespace CafeteriaWebApi.Services.Implementations
             return existingUser.Id;
         }
 
+        public BaseResponse ValidarUsuario(string email, string password)
+        {
+            BaseResponse response = new BaseResponse();
+            User? userForLogin = _context.Users.SingleOrDefault(u => u.Email == email);
+            if (userForLogin != null)
+            {
+                if (userForLogin.Password == password)
+                {
+                    response.Result = true;
+                    response.Message = "loging Succesfull";
+                }
+                else
+                {
+                    response.Result = false;
+                    response.Message = "wrong password";
+                }
+            }
+            else
+            {
+                response.Result = false;
+                response.Message = "wrong email";
+            }
+            return response;
+        }
 
     }
 }

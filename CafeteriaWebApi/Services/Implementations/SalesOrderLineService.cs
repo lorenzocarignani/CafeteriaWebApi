@@ -17,32 +17,19 @@ namespace CafeteriaWebApi.Services.Implementations
             _context = context;
         }
 
-        public List<SaleOrderLine> GetSaleOrderLines(int clientId, int orderId)
+        int ISalesOrderLineService.CreateSaleOrderLine(SaleOrderLine saleOrderLine)
         {
-            return _context.SaleOrderLines
-                .Include(s => s.Product)
-                .Where(s => s.OrderId == orderId && s.Order.Clients.Id == clientId)
-                .ToList();
+            throw new NotImplementedException();
         }
 
-        public int CreateSaleOrderLine(SaleOrderLine saleOrderLine)
+        public void DeleteSaleOrderLine(int IdSaleOrderLine)
         {
-            _context.SaleOrderLines.Add(saleOrderLine);
-            _context.SaveChanges();
-            return saleOrderLine.IdSaleOrderLine;
+            throw new NotImplementedException();
         }
 
-        public void DeleteSaleOrderLine(int saleOrderLineId)
+        public List<SaleOrderLine> GetSaleOrderLineById(int IdSaleOrderLine)
         {
-            var saleOrderLineToDelete = _context.SaleOrderLines.Find(saleOrderLineId);
-
-            if (saleOrderLineToDelete != null)
-            {
-                _context.SaleOrderLines.Remove(saleOrderLineToDelete);
-                _context.SaveChanges();
-            }
+            throw new NotImplementedException();
         }
-
-        // Puedes agregar más métodos según sea necesario para la lógica de negocio de SaleOrderLine
     }
 }
