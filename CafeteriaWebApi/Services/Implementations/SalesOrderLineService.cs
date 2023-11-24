@@ -2,61 +2,47 @@
 using CafeteriaWebApi.Data.Entities;
 using CafeteriaWebApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CafeteriaWebApi.Services.Implementations
 {
-    public class SalesOrderLineService : ISalesOrderLineService
-     {
-            private readonly CafeteriaContext _context;
+    public class SaleOrderLineService : ISalesOrderLineService
+    {
+        private readonly CafeteriaContext _context;
 
-            public SalesOrderLineService(CafeteriaContext context)
-            {
-                _context = context;
-            }
+        public SaleOrderLineService(CafeteriaContext context)
+        {
+            _context = context;
+        }
 
-            public int CreateSaleOrderLine(SaleOrderLine sol)
+        public List<SaleOrderLine> GetSaleOrderLines(int clientId, int orderId)
+        {
+            return _context.SaleOrderLines
+                .Include(s => s.Product)
+                .Where(s => s.OrderId == orderId && s.Order.Clients.Id == clientId)
+                .ToList();
+        }
+
+        public int CreateSaleOrderLine(SaleOrderLine saleOrderLine)
+        {
+            _context.SaleOrderLines.Add(saleOrderLine);
+            _context.SaveChanges();
+            return saleOrderLine.IdSaleOrderLine;
+        }
+
+        public void DeleteSaleOrderLine(int saleOrderLineId)
+        {
+            var saleOrderLineToDelete = _context.SaleOrderLines.Find(saleOrderLineId);
+
+            if (saleOrderLineToDelete != null)
             {
-                _context.Add(sol);
+                _context.SaleOrderLines.Remove(saleOrderLineToDelete);
                 _context.SaveChanges();
-                return sol.IdSaleOrderLine;
             }
+        }
 
-            public void DeleteSaleOrderLine(int idSol)
-            {
-                var saleOrderLine = _context.SaleOrderLines.FirstOrDefault(x => x.IdSaleOrderLine == idSol);
-
-                if (saleOrderLine != null)
-                {
-                    _context.SaleOrderLines.Remove(saleOrderLine);
-                    _context.SaveChanges();
-                }
-            }
-
-
-
-            public SaleOrderLine GetSaleOrderLineById(int idSol)
-            {
-                return _context.SaleOrderLines
-                               .Include(sol => sol.Products) // Cargar el producto relacionado
-                               .Include(sol => sol.Orders)   // Cargar la orden relacionada
-                               .FirstOrDefault(sol => sol.IdSaleOrderLine == idSol);
-            }
-
-            public int UpdateSaleOrderLine(SaleOrderLine sol)
-            {
-                var existingSol = _context.SaleOrderLines.SingleOrDefault(u => u.IdSaleOrderLine == sol.IdSaleOrderLine);
-
-                if (existingSol == null)
-                {
-                    return 0;
-                }
-
-                existingSol.QuantityOfProduct = sol.QuantityOfProduct;
-                existingSol.Discount = sol.Discount;
-
-                _context.Update(existingSol);
-                _context.SaveChanges();
-                return existingSol.IdSaleOrderLine;
-            }
+        // Puedes agregar más métodos según sea necesario para la lógica de negocio de SaleOrderLine
     }
 }

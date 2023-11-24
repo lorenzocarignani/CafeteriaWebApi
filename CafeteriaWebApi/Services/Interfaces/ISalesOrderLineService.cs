@@ -1,12 +1,13 @@
-﻿using CafeteriaWebApi.Data.Entities;
+﻿using CafeteriaWebApi.Data;
+using CafeteriaWebApi.Data.Entities;
+using CafeteriaWebApi.Services.Implementations;
 
 namespace CafeteriaWebApi.Services.Interfaces
 {
     public interface ISalesOrderLineService
     {
-        public int CreateSaleOrderLine(SaleOrderLine sol);
-        public int UpdateSaleOrderLine(SaleOrderLine sol);
-        public void DeleteSaleOrderLine(int idSol);
-        public SaleOrderLine GetSaleOrderLineById(int idSol);
+        public List<SaleOrderLine> GetSaleOrderLines(int clientId, int orderId);
+        public int CreateSaleOrderLine(SaleOrderLine saleOrderLine);
+        public void DeleteSaleOrderLine(int saleOrderLineId);
     }
 }

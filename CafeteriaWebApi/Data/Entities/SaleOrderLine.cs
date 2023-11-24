@@ -9,16 +9,13 @@ namespace CafeteriaWebApi.Data.Entities
         [Key]
         public int IdSaleOrderLine { get; set; }
         public int QuantityOfProduct { get; set; }
-        public decimal Discount { get; set; }
 
         [ForeignKey("ProductId")]
-        public Product? Products { get; set; }
+        public Product? Product { get; set; }
         public int ProductId { get; set; }
 
         [ForeignKey("OrderId")]
-        public Order? Orders { get; set; }
+        public Order? Order { get; set; }
         public int OrderId { get; set; }
-
-        public ICollection<Product> Product { get; set; } = new List<Product>();
     }
 }

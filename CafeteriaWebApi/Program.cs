@@ -26,6 +26,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ISalesOrderLineService, SaleOrderLineService>();
 #endregion
 var app = builder.Build();
 

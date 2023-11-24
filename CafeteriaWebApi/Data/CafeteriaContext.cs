@@ -67,11 +67,11 @@ namespace CafeteriaWebApi.Data
 
             modelBuilder.Entity<Order>()
                 .HasMany(sol => sol.SaleOrderLines)
-                .WithOne(p => p.Orders)
+                .WithOne(p => p.Order)
                 .HasForeignKey(i => i.OrderId);
 
             modelBuilder.Entity<SaleOrderLine>()
-                .HasOne(l => l.Products)
+                .HasOne(l => l.Product)
                 .WithMany()
                 .HasForeignKey(i => i.ProductId);
         }
