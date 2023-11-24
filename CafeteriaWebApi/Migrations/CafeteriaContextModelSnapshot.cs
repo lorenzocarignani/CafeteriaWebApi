@@ -23,9 +23,6 @@ namespace CafeteriaWebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("AdminId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("ClientId")
                         .HasColumnType("INTEGER");
 
@@ -46,8 +43,6 @@ namespace CafeteriaWebApi.Migrations
 
                     b.HasKey("IdOrder");
 
-                    b.HasIndex("AdminId");
-
                     b.HasIndex("ClientId");
 
                     b.ToTable("Orders");
@@ -57,7 +52,7 @@ namespace CafeteriaWebApi.Migrations
                         {
                             IdOrder = 1,
                             ClientId = 2,
-                            DeliveryTime = new DateTime(2023, 11, 23, 22, 5, 18, 32, DateTimeKind.Local).AddTicks(6450),
+                            DeliveryTime = new DateTime(2023, 11, 24, 2, 17, 9, 81, DateTimeKind.Local).AddTicks(9399),
                             NameOrder = "Cafe",
                             Quantity = 0,
                             State = 1,
@@ -102,9 +97,6 @@ namespace CafeteriaWebApi.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ProductIdProduct")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("QuantityOfProduct")
                         .HasColumnType("INTEGER");
 
@@ -113,8 +105,6 @@ namespace CafeteriaWebApi.Migrations
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductIdProduct");
 
                     b.ToTable("SaleOrderLines");
                 });
@@ -187,10 +177,6 @@ namespace CafeteriaWebApi.Migrations
 
             modelBuilder.Entity("CafeteriaWebApi.Data.Entities.Order", b =>
                 {
-                    b.HasOne("CafeteriaWebApi.Data.Entities.Admin", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("AdminId");
-
                     b.HasOne("CafeteriaWebApi.Data.Entities.Client", "Clients")
                         .WithMany("Orders")
                         .HasForeignKey("ClientId")
@@ -214,10 +200,6 @@ namespace CafeteriaWebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CafeteriaWebApi.Data.Entities.Product", null)
-                        .WithMany("SaleOrderLines")
-                        .HasForeignKey("ProductIdProduct");
-
                     b.Navigation("Order");
 
                     b.Navigation("Product");
@@ -226,16 +208,6 @@ namespace CafeteriaWebApi.Migrations
             modelBuilder.Entity("CafeteriaWebApi.Data.Entities.Order", b =>
                 {
                     b.Navigation("SaleOrderLines");
-                });
-
-            modelBuilder.Entity("CafeteriaWebApi.Data.Entities.Product", b =>
-                {
-                    b.Navigation("SaleOrderLines");
-                });
-
-            modelBuilder.Entity("CafeteriaWebApi.Data.Entities.Admin", b =>
-                {
-                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("CafeteriaWebApi.Data.Entities.Client", b =>

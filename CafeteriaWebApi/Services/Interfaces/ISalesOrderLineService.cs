@@ -6,8 +6,9 @@ namespace CafeteriaWebApi.Services.Interfaces
 {
     public interface ISalesOrderLineService
     {
-        public List<SaleOrderLine> GetSaleOrderLineById (int IdSaleOrderLine);
-        public int CreateSaleOrderLine(SaleOrderLine saleOrderLine);
-        public void DeleteSaleOrderLine(int IdSaleOrderLine);
+        Task<SaleOrderLine> GetSaleOrderLineById(int saleOrderLineId);
+        Task<bool> DeleteSaleOrderLineById(int saleOrderLineId);
+        Task<bool> CreateSaleOrderLine(int orderId, int productId, int quantity);
+
     }
 }

@@ -17,19 +17,68 @@ namespace CafeteriaWebApi.Services.Implementations
             _context = context;
         }
 
-        int ISalesOrderLineService.CreateSaleOrderLine(SaleOrderLine saleOrderLine)
+        public async Task<SaleOrderLine> GetSaleOrderLineById(int saleOrderLineId)
         {
-            throw new NotImplementedException();
+            return await _context.SaleOrderLines
+            .Include(sol => sol.Order)
+            .Include(sol => sol.Product)
+            .FirstOrDefaultAsync(sol => sol.IdSaleOrderLine == saleOrderLineId);
         }
 
-        public void DeleteSaleOrderLine(int IdSaleOrderLine)
+        public async Task<bool> CreateSaleOrderLine(int orderId, int productId, int quantity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var order = await _context.Orders.FindAsync(orderId);
+                var product = await _context.Products.FindAsync(productId);
+
+                if (order == null || product == null)
+                {
+                    return false; // Manejar el caso cuando no se encuentre la orden o el producto
+                }
+
+                var saleOrderLine = new SaleOrderLine
+                {
+                    OrderId = orderId,
+                    ProductId = productId,
+                    QuantityOfProduct = quantity
+                };
+
+                _context.SaleOrderLines.Add(saleOrderLine);
+                await _context.SaveChangesAsync();
+
+                return true; // Éxito al crear la línea de pedido
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                return false;
+            }
         }
 
-        public List<SaleOrderLine> GetSaleOrderLineById(int IdSaleOrderLine)
+        public async Task<bool> DeleteSaleOrderLineById(int saleOrderLineId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var saleOrderLine = await _context.SaleOrderLines.FindAsync(saleOrderLineId);
+
+                if (saleOrderLine == null)
+                {
+                    return false; // Manejar el caso cuando no se encuentra la SaleOrderLine
+                }
+
+                _context.SaleOrderLines.Remove(saleOrderLine);
+                await _context.SaveChangesAsync();
+
+                return true; // Éxito al eliminar la SaleOrderLine
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                return false;
+            }
         }
+
+        // Puedes agregar más métodos según sea necesario para la lógica de negocio de SaleOrderLine
     }
 }

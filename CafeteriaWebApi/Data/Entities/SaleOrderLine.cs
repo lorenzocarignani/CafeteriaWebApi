@@ -8,10 +8,7 @@ namespace CafeteriaWebApi.Data.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int IdSaleOrderLine { get; set; }
-        public int QuantitySaleOrderLine { get; set; }
-        public string NameSaleOrderLine { get; set; }
-        public decimal PriceSaleOrderLine { get; set; }
-
+        public int QuantityOfProduct { get; set; }
 
         [ForeignKey("ProductId")]
         public Product? Product { get; set; }

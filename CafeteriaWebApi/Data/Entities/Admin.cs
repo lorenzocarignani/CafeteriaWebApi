@@ -2,8 +2,6 @@
 {
     public class Admin : User
     {
-        public ICollection<Order>? Orders { get; set; }
-
     }
 }
     
