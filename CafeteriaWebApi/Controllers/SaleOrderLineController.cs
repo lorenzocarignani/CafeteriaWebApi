@@ -22,9 +22,7 @@ namespace CafeteriaWebApi.Controllers
         [HttpGet("{saleOrderLineId}")]
         public async Task<IActionResult> GetSaleOrderLine(int saleOrderLineId)
         {
-            string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
-
-            if(role == "Admin") { 
+            
             var saleOrderLine = await _saleOrderLineService.GetSaleOrderLineById(saleOrderLineId);
 
                 if (saleOrderLine != null)
@@ -48,8 +46,7 @@ namespace CafeteriaWebApi.Controllers
                     {
                     return NotFound("SaleOrderLine not found");
                     }
-            }
-            return Forbid();
+            
         }
 
         [HttpDelete("{saleOrderLineId}")]
