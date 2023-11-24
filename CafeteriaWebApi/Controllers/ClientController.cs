@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CafeteriaWebApi.Data.Entities;
 using CafeteriaWebApi.Data.Models;
@@ -12,90 +13,43 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CafeteriaWebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/client")]
     [ApiController]
     [Authorize]
     public class ClientController : ControllerBase
     {
+        private readonly IAdminService _adminService;
         private readonly IUserService _userService;
         private readonly IOrderService _orderService;
         private readonly IClientService _clientService;
         private readonly IProductService _productService;
 
-        public ClientController(IUserService userService, IOrderService orderService, IClientService clientService, IProductService productService)
+        public ClientController(IUserService userService, IAdminService adminService, IOrderService orderService, IClientService clientService, IProductService productService)
         {
+            _adminService = adminService;
             _userService = userService;
             _orderService = orderService;
             _clientService = clientService;
             _productService = productService;
         }
 
-        [HttpGet("{id}/{orderId}")]
-        public IActionResult GetOrderById(int id, int orderId)
+        [HttpGet("GetClients")]
+        public IActionResult GetClients()
         {
+
             try
             {
-                var client = _clientService.GetClientById(id);
-                if (client == null)
+                string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
+                if (role == "Admin")
                 {
-                    return NotFound("Cliente no encontrado");
-                }
-
-                // si la order coinicide con el id del cliente la trae si no no     
-                var order = _orderService.GetOrder(id, orderId); 
-
-                if (order == null)
-                {
-                    return NotFound("Orden no encontrada");
-                }
-
-                return Ok(order);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Error interno del servidor" + ex.Message);
-            }
-        }
-
-
-
-        [HttpGet("GetAllOrders/{id}")]
-        public IActionResult GetOrders(int id)
-        {
-            try
-            {
-                var client = _clientService.GetClientById(id);
-                if (client == null)
-                {
-                    return NotFound("Cliente no encontrado");
-                }
-
-                // Obtiene todas las órdenes del cliente
-                var orders = _orderService.GetAllOrders(id);
-
-                // Mapea el cliente y las órdenes sin incluir la lista de órdenes directamente
-                var clientResponse = new ClientResponseDto
-                {
-                    Id = client.Id,
-                    Name = client.Name,
-                    Password = client.Password,
-                    Email = client.Email,
-                    UserType = client.UserType,
-                    UserState = client.UserState,
-                    Orders = orders.Select(o => new OrderResponseDto
+                    var res = _adminService.GetClients();
+                    if (res == null)
                     {
-                        IdOrder = o.IdOrder,
-                        State = o.State,
-                        TotalPrice = o.TotalPrice,
-                        DeliveryTime = o.DeliveryTime,
-                        Quantity = o.Quantity,
-                        NameOrder = o.NameOrder,
-                        ClientId = o.ClientId
-                        // No incluir la propiedad "Orders" 
-                    }).ToList()
-                };
-
-                return Ok(clientResponse);
+                        return BadRequest(res);
+                    }
+                    return Ok(res);
+                }
+                return Forbid();
 
             }
             catch (Exception ex)
@@ -104,55 +58,25 @@ namespace CafeteriaWebApi.Controllers
             }
         }
 
+        [HttpPost("CreateClient")]
 
-        [HttpPost("clients/{clientId}/orders")]
-        public IActionResult CreateOrder([FromBody] OrderDto orderDto, int clientId)
-        {
-
-            try
-            {
-                var client = _clientService.GetClientById(clientId);
-                if (client == null)
-                {
-                    return NotFound("Cliente no encontrado");
-                }
-
-
-                var order = new Order()
-                {
-                    NameOrder = orderDto.NameOrder,
-                    Quantity = orderDto.Quantity,
-                    Clients = (Client)client // si no lo ponia asi marcaba error , es para asociar la order al cliente
-                };
-                int id = _orderService.CreateOrder(order);
-                return Ok($"el id de su producto es {id}");
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Error interno del servidor" + ex.Message);
-            }
-        }
-        
-
-        [HttpPut("{idOrder}")]
-        public IActionResult UpdateOrder([FromBody]OrderDto orderDto, int idOrder )
+        public IActionResult CreateClient([FromBody] AdminPostDto adminDto)
         {
             try
             {
-                var uOrder = new Order()
+                var res = new Client()
                 {
-                    IdOrder = idOrder,
-                    NameOrder = orderDto.NameOrder,
-                    Quantity = orderDto.Quantity
+                    Email = adminDto.Email,
+                    Name = adminDto.Name,
+                    Password = adminDto.Password,
                 };
-                if (uOrder == null)
+                if (res == null)
                 {
-                    return BadRequest(uOrder);
+                    return BadRequest(res);
                 }
-
-                int id = _orderService.UpdateOrder(uOrder);
+                int id = _userService.CreateUser(res);
                 return Ok(id);
+
             }
             catch (Exception ex)
             {
@@ -161,34 +85,54 @@ namespace CafeteriaWebApi.Controllers
 
         }
 
-
-        [HttpDelete("clients/{clientId}/orders/{orderId}")]
-        public IActionResult DeleteOrder(int clientId, int orderId)
+        [HttpDelete("DeleteUser/{userId}")]
+        public IActionResult DeleteUser(int userId)
         {
             try
             {
-                var client = _clientService.GetClientById(clientId);
-                if (client == null)
+                    if (userId == 0)
                 {
-                    return NotFound("Cliente no encontrado");
+                    return NotFound("Usuario no encontrado");
                 }
+                _userService.DeleteUser(userId);
+                return NoContent();
 
-                var order = _orderService.GetOrder(clientId, orderId);
-                if (order == null)
-                {
-                    return NotFound("Orden no encontrada");
-                }
-
-                
-                _orderService.DeleteOrder(orderId);
-
-                return Ok("Orden eliminada exitosamente");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "Error interno del servidor" + ex.Message);
             }
         }
+
+        [HttpPut("UpdateClient/{ClientId}")]
+        public IActionResult UpdateClient([FromRoute] int ClientId, [FromBody] UserPutDto userDto)
+        {
+            try
+            {
+                var clientToUpdate = new Client()
+                {
+                    Id = ClientId,
+                    Email = userDto.Email,
+                    Name = userDto.Name,
+                    Password = userDto.Password,
+                };
+
+                int updatedClientId = _userService.UpdateUser(clientToUpdate);
+
+                if (updatedClientId == 0)
+                {
+                    return NotFound($"Usuario con ID {ClientId} no encontrado");
+                }
+
+                return Ok(updatedClientId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno del servidor: " + ex.Message);
+            }
+        }
+
+
 
     }
 }

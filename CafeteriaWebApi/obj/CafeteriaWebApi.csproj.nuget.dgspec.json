@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\CafeteriaWebApi\\CafeteriaWebApi\\CafeteriaWebApi.csproj": {}
+    "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\2intento\\CafeteriaWebApi\\CafeteriaWebApi\\CafeteriaWebApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\CafeteriaWebApi\\CafeteriaWebApi\\CafeteriaWebApi.csproj": {
+    "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\2intento\\CafeteriaWebApi\\CafeteriaWebApi\\CafeteriaWebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\CafeteriaWebApi\\CafeteriaWebApi\\CafeteriaWebApi.csproj",
+        "projectUniqueName": "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\2intento\\CafeteriaWebApi\\CafeteriaWebApi\\CafeteriaWebApi.csproj",
         "projectName": "CafeteriaWebApi",
-        "projectPath": "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\CafeteriaWebApi\\CafeteriaWebApi\\CafeteriaWebApi.csproj",
+        "projectPath": "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\2intento\\CafeteriaWebApi\\CafeteriaWebApi\\CafeteriaWebApi.csproj",
         "packagesPath": "C:\\Users\\loren\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\CafeteriaWebApi\\CafeteriaWebApi\\obj\\",
+        "outputPath": "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\2intento\\CafeteriaWebApi\\CafeteriaWebApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\loren\\AppData\\Roaming\\NuGet\\NuGet.Config",

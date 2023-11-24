@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xkkTyH4yAD2glqEGOmFk28J3x5BxEh7i2pToFQ68nTI/QF5o7bvTdVkpt6nzyn7Vd55URrpeqnO44fKBoMYxpA==",
+  "dgSpecHash": "ooQGCbz36R0UmOwTXyVmY6ms/0VvZP5bknTrUmAQkEesatkSc9iSA26VACb35rBaIri82HvhGKf8aCU/0yo/gw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\CafeteriaWebApi\\CafeteriaWebApi\\CafeteriaWebApi.csproj",
+  "projectFilePath": "C:\\Users\\loren\\OneDrive\\Desktop\\TUP2023\\PIII\\2intento\\CafeteriaWebApi\\CafeteriaWebApi\\CafeteriaWebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\loren\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\loren\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.24\\microsoft.aspnetcore.authentication.jwtbearer.6.0.24.nupkg.sha512",

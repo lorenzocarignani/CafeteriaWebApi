@@ -5,6 +5,7 @@ using CafeteriaWebApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CafeteriaWebApi.Controllers
 {
@@ -60,17 +61,22 @@ namespace CafeteriaWebApi.Controllers
         {
             try
             {
-                var res = new Product
+                string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
+                if (role == "Admin")
                 {
-                    NameProduct = productDto.NameProduct,
-                    Price = productDto.Price,
-                };
-                if (res == null)
-                {
-                    return BadRequest(res);
+                    var res = new Product
+                    {
+                        NameProduct = productDto.NameProduct,
+                        Price = productDto.Price,
+                    };
+                    if (res == null)
+                    {
+                        return BadRequest(res);
+                    }
+                    int id = _productService.CreateProduct(res);
+                    return Ok(id);
                 }
-                int id = _productService.CreateProduct(res);
-                return Ok(id);
+                return Forbid();
 
             }catch (Exception ex)
             {
@@ -83,21 +89,26 @@ namespace CafeteriaWebApi.Controllers
         {
             try
             {
-                var productToUpdate = new Product()
+                string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
+                if (role == "Admin")
                 {
-                    IdProduct = idProduct,
-                    NameProduct = product.NameProduct,
-                    Price = product.Price,
-                };
+                    var productToUpdate = new Product()
+                    {
+                        IdProduct = idProduct,
+                        NameProduct = product.NameProduct,
+                        Price = product.Price,
+                    };
 
-                int updatedProductId = _productService.UpdateProduct(productToUpdate);
+                    int updatedProductId = _productService.UpdateProduct(productToUpdate);
 
-                if (updatedProductId == 0)
-                {
-                    return NotFound($"Producto con ID {idProduct} no encontrado");
+                    if (updatedProductId == 0)
+                    {
+                        return NotFound($"Producto con ID {idProduct} no encontrado");
+                    }
+
+                    return Ok($"Producto actualizado exitosamente, ID del producto: {updatedProductId}");
                 }
-
-                return Ok($"Producto actualizado exitosamente, ID del producto: {updatedProductId}");
+                return Forbid();
             }
             catch (Exception ex)
             {
@@ -110,13 +121,17 @@ namespace CafeteriaWebApi.Controllers
         {
             try
             {
-                if (idProduct == null)
+                string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
+                if (role == "Admin")
                 {
-                    return NotFound($"El producto con el ID: {idProduct} no fue encontrado");
+                    if (idProduct == null)
+                    {
+                        return NotFound($"El producto con el ID: {idProduct} no fue encontrado");
+                    }
+                    _productService.DeleteProduct(idProduct);
+                    return NoContent();
                 }
-                _productService.DeleteProduct(idProduct);
-                return NoContent();
-
+                return Forbid();
             }
             catch (Exception ex)
             {
